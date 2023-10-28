@@ -4,6 +4,7 @@ M = {
     tab = {},
 }
 M.running = false
+
 local opt = vim.opt
 local api = vim.api
 local cmd = vim.cmd
@@ -39,12 +40,6 @@ local cmd = vim.cmd
 -- Credit, insperation for function: https://github.com/pocco81/true-zen.nvim
 local function add_padding(command, props, move)
 
-    -- TODO ska dessa vara här?
-    opt.number = false
-    opt.relativenumber = false
-    opt.modified = false
-    opt.cursorline = false
-    opt.fillchars = { eob = ' ', vert = ' ' }
 
     -- TODO if focus_props exists, utgå ifrån den och padda allt runt omkring
     -- annars låt användaren padda alla enskilda 
@@ -68,8 +63,14 @@ end
 -- creating the layout for my zen mode 
 function M.layout()
 
-    vim.api.nvim_create_user_command('Testing', 'echo "hellow world"', {})
-    -- TODO how can i save all the old settings here to be reset later?
+    -- TODO ska dessa vara här?
+    opt.number = false
+    opt.relativenumber = false
+    opt.modified = false
+    opt.cursorline = false
+    opt.fillchars = { eob = ' ', vert = ' ' }
+
+
     local prevsplitright = opt.splitright
     local prevsplitbelow = opt.splitbelow
     opt.splitright = true
@@ -84,20 +85,18 @@ function M.layout()
     -- create a new tab that we use 
     cmd("tabnew")
 
-    -- Calculating width of window, implement this instead
-    --print(vim.api.nvim_win_get_width(0) * 0.6)
-
-    --TODO i should actually decide in the config how large the focus window should be, and then align accordingly if < window then = window width
-    M.windows.left = add_padding("leftabove vsplit", {width = 60}, "wincmd l")
-    M.windows.right = add_padding("rightbelow vsplit", {width = 60}, "wincmd h")
-    M.windows.top = add_padding("leftabove split", {height = 2}, "wincmd j")
-    M.windows.bottom = add_padding("rightbelow split", {height = 2}, "wincmd k")
+    M.windows.left = add_padding("leftabove vsplit", {width = 70}, "wincmd l")
+    M.windows.right = add_padding("rightbelow vsplit", {width = 70}, "wincmd h")
+    M.windows.top = add_padding("leftabove split", {height = 1}, "wincmd j")
+    M.windows.bottom = add_padding("rightbelow split", {height = 1}, "wincmd k")
 
     M.windows.main = api.nvim_get_current_win()
 
     api.nvim_win_set_buf(M.windows.main, focused_buf)
     api.nvim_win_set_cursor(M.windows.main, cursor)
 
+    opt.number = true
+    opt.relativenumber = true
 
     opt.splitright = prevsplitright
     opt.splitbelow = prevsplitbelow
@@ -116,10 +115,15 @@ end
 function M.toggle()
 
     if M.running then
+        -- TODO reset settings
         M.close()
         M.running = false
         vim.opt.showtabline  = 1
+        opt.number = true
+        opt.relativenumber = true
     else
+        -- TODO set relevant settings
+        -- TODO backup old settings
         vim.opt.showtabline  = 0
 
         M.layout()
