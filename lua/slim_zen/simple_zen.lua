@@ -17,10 +17,8 @@ M.running = false
 function M.layout()
 
     -- TODO ska dessa vara här?
-    opt.number = false
-    opt.relativenumber = false
     opt.modified = false
-    opt.cursorline = false
+    -- opt.cursorline = false
     opt.fillchars = { eob = ' ', vert = ' ' }
 
 
@@ -48,8 +46,6 @@ function M.layout()
     api.nvim_win_set_buf(M.windows.main, focused_buf)
     api.nvim_win_set_cursor(M.windows.main, cursor)
 
-    opt.number = true
-    opt.relativenumber = true
 
     opt.splitright = prevsplitright
     opt.splitbelow = prevsplitbelow
