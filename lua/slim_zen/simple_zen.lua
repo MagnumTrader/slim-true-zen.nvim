@@ -68,12 +68,13 @@ end
 function M.toggle()
 
     if M.running then
-        -- TODO reset settings
         M.close()
         M.running = false
+        -- TODO reset settings
         vim.opt.showtabline  = 1
-        opt.number = true
-        opt.relativenumber = true
+        vim.opt.number = true
+        vim.opt.relativenumber = true
+        vim.opt.cursorline = true
     else
         -- TODO set relevant settings
         -- TODO backup old settings
