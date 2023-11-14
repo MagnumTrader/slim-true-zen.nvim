@@ -20,7 +20,6 @@ function M.layout()
     opt.number = false
     opt.relativenumber = false
     opt.modified = false
-
     -- opt.cursorline = false
     opt.fillchars = { eob = ' ', vert = ' ' }
 
@@ -39,8 +38,8 @@ function M.layout()
     -- create a new tab that we use 
     cmd("tabnew")
 
-    M.windows.left = add_padding("leftabove vsplit", {width = 70}, "wincmd l")
-    M.windows.right = add_padding("rightbelow vsplit", {width = 70}, "wincmd h")
+    M.windows.left = add_padding("leftabove vsplit", {width = 50}, "wincmd l")
+    M.windows.right = add_padding("rightbelow vsplit", {width = 50}, "wincmd h")
     M.windows.top = add_padding("leftabove split", {height = 1}, "wincmd j")
     M.windows.bottom = add_padding("rightbelow split", {height = 1}, "wincmd k")
 
